@@ -20,7 +20,7 @@ for k=1:5
         loss1=calc_loss_LN_Bern(output.Ah{k},output.nu_h{k},X_test_cv1,alpha);
         pred_err1=pred_error_LN_Bern(X_test_cv1,output.Ah{k},output.nu_h{k});
         loss2=calc_loss_LN_Bern(output.Ah{k},output.nu_h{k},X_test_cv2,alpha);
-        pred_err2=pred_error_LN_Bern(X_test_cv2,output.Ah,output.nu_h);
+        pred_err2=pred_error_LN_Bern(X_test_cv2,output.Ah{k},output.nu_h{k});
         output.pred_loss{k}=(loss1*(init_test_sz-1)+loss2*...
             (T-train_cv_sz-init_test_sz))/(T-train_cv_sz-1);
         output.pred_err{k}=(pred_err1+pred_err2)/(T-train_cv_sz-1);

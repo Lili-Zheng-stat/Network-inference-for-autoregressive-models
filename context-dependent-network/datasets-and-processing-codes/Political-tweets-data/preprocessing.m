@@ -61,4 +61,4 @@ X_train_rounded=X_rounded(1:floor(0.7*(T+1)),:,:);
 X_test=X((floor(0.7*(T+1))+1):(T+1),:,:);
 X_test_rounded=X_rounded((floor(0.7*(T+1))+1):(T+1),:,:);[T_test,~,~]=size(X_test);
 
-save('X.mat','X','X_rounded','X_train','X_train_rounded','X_test','X_test_rounded','T_train','users','labels');
+save('X.mat','X','X_rounded','X_train','X_train_rounded','X_test','X_test_rounded','T_train','T_test','users','labels');

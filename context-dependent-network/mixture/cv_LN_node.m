@@ -22,15 +22,16 @@ for k=1:5
     if (init_test_sz>1)&&((T+1)>(train_cv_sz+init_test_sz+1))
         loss1=calc_loss_LN_node(output.Ah{k},output.nu_h{k},X_cov_test_cv1,X_resp_test_cv1,alpha);
         loss2=calc_loss_LN_node(output.Ah{k},output.nu_h{k},X_cov_test_cv2,X_resp_test_cv2,alpha);
-        pred_err1=pred_err_LN_node(X_cov_test_cv1,X_resp_test_cv1,output.Ah,output.nu_h);
-        pred_err2=pred_err_LN_node(X_cov_test_cv2,X_resp_test_cv2,output.Ah,output.nu_h);
+        pred_err1=pred_err_LN_node(X_cov_test_cv1,X_resp_test_cv1,output.Ah{k},output.nu_h{k});
+        pred_err2=pred_err_LN_node(X_cov_test_cv2,X_resp_test_cv2,output.Ah{k},output.nu_h{k});
         output.pred_loss{k}=(loss1*(init_test_sz-1)+loss2*...
             (T-train_cv_sz-init_test_sz))/(T-train_cv_sz-1);
         output.pred_err{k} = (pred_err1 + pred_err2)/(T-train_cv_sz-1);
     elseif init_test_sz>1
-        output.pred_loss{k}=calc_loss_LN_node(output.Ah{k},output.nu_h{k},X_cov_test_cv1,X_resp_test_cv1);
+        output.pred_loss{k}=calc_loss_LN_node(output.Ah{k},output.nu_h{k},X_cov_test_cv1,X_resp_test_cv1,alpha);
         output.pred_err{k}=pred_err_LN_node(X_cov_test_cv1,X_resp_test_cv1,output.Ah{k},output.nu_h{k})/(init_test_sz-1);
     else
-        output.pred_loss{k}=calc_loss_MN_node(output.Ah{k},output.nu_h{k},X_cov_test_cv2,X_resp_test_cv2);
-        output.pred_err{k}=pred_err_LN_node(X_cov_test_cv2,X_resp_test_cv2,output.Ah{k},output.nu_{k})/(T-train_cv_sz-init_test_sz);
+        output.pred_loss{k}=calc_loss_LN_node(output.Ah{k},output.nu_h{k},X_cov_test_cv2,X_resp_test_cv2,alpha);
+        output.pred_err{k}=pred_err_LN_node(X_cov_test_cv2,X_resp_test_cv2,output.Ah{k},output.nu_h{k})/(T-train_cv_sz-init_test_sz);
     end
+end

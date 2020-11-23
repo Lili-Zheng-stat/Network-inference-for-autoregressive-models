@@ -1,9 +1,9 @@
-function [ah,sigma_sq_hat]=est_a_sigma(X_cov,X_resp,Ah_MN,nu_h_MN)
+function [ah,sigma_MN_sq_hat]=est_a_sigma(X_cov,X_resp,Ah_MN,nu_h_MN)
 %estimate the Gaussian mixture parameters a and sigma squared for each node, given
 %estimated A (M*K*M*K) and nu (M*K) under the multinomial model.
 
 [T,M,K]=size(X_cov);
-ah=zeros(1,M);sigma_sq_hat=zeros(1,M);
+ah=zeros(1,M);sigma_MN_sq_hat=zeros(1,M);
 for m=1:M
     nevent=0;logratio_sq_sum=0;
     mixt_sq_expt_sum=0;ah_numer=0;ah_denom=0;
@@ -25,5 +25,5 @@ for m=1:M
     ah(m)=ah_numer/ah_denom;
     logratio_sq_mean=logratio_sq_sum/nevent;
     mixt_sq_expt_mean=mixt_sq_expt_sum/nevent;
-    sigma_sq_hat(m)=max((logratio_sq_mean-mixt_sq_expt_mean*ah(m)^2)/(K-1),0.001);
+    sigma_MN_sq_hat(m)=max((logratio_sq_mean-mixt_sq_expt_mean*ah(m)^2)/(K-1),0.001);
 end

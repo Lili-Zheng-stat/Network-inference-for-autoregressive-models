@@ -1,7 +1,9 @@
 ---
 title: "Testing for autoregressive network parameter"
 author: Lili Zheng
-output: html_document
+output:
+  github_document:
+    pandoc_args: --webtex
 ---
 
 ```{r setup, include=FALSE}
@@ -18,15 +20,10 @@ Specifically, we consider the following time series model: $$X_{t+1}=A^*X_t+\eps
 ## Example
 
 Consider the following example where the matrix $A\in \mathbb{R}^{M\times M}$ is a block matrix:
-$$A^*=\begin{pmatrix}
-	1/4 &1/2&0&0&\cdots&0&0\\
-	1/2 & 1/4&0&0&\cdots&0&0\\
-	0&0&1/4 &1/2&\cdots&\vdots&\vdots\\
-	0&0&1/2 & 1/4&\cdots&\vdots&\vdots\\
-	\vdots&\vdots&\ddots&\ddots&\ddots&\vdots&\vdots\\
-	0&0&\cdots&\cdots&\cdots&1/4&1/2\\
-	0&0&\cdots&\cdots&\cdots&1/2&1/4
-	\end{pmatrix},$$
+```{r pressure, echo=FALSE, out.width = '50%'}
+knitr::include_graphics("A_mat.png")
+```
+
 and $M=30$, the time series data is of size $N=500$.
 ```{r, message=FALSE}
 source("Test_functions.R")

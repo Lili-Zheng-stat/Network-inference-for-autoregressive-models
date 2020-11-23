@@ -1,4 +1,4 @@
-function [logL_LN_est,logL_MN_est]=test_MN_LN(X_cov,X_resp,Ah_MN,nu_h_MN,a,sigma_sq,Ah_LN,nu_h_LN)
+function [logL_LN_est,logL_MN_est]=test_MN_LN(X_cov,X_resp,Ah_MN,nu_h_MN,a,sigma_MN_sq,Ah_LN,nu_h_LN)
 %log likelihood function for each node under two estimated models
 
 [T,M,K]=size(X_cov);
@@ -17,9 +17,9 @@ for m=1:M
             logratio=reshape(log(X_resp(t,m,1:(K-1))/X_resp(t,m,K)),1,K-1);
             density=zeros(1,K);
             for k=1:(K-1)
-                density(k)=exp(-((sum(logratio.^2)+a(m)^2-2*a(m)*logratio(k))/2/sigma_sq(m)))/((2*pi*sigma_sq(m))^((K-1)/2));
+                density(k)=exp(-((sum(logratio.^2)+a(m)^2-2*a(m)*logratio(k))/2/sigma_MN_sq(m)))/((2*pi*sigma_MN_sq(m))^((K-1)/2));
             end
-            density(K)=exp(-((sum(logratio.^2)+a(m)^2*k+2*a(m)*sum(logratio))/2/sigma_sq(m)))/((2*pi*sigma_sq(m))^((K-1)/2));
+            density(K)=exp(-((sum(logratio.^2)+a(m)^2*k+2*a(m)*sum(logratio))/2/sigma_MN_sq(m)))/((2*pi*sigma_MN_sq(m))^((K-1)/2));
             logL_MN_temp=-log(sum(exp(param_MN)/(1+sum(exp(param_MN))).*density));
             logL_LN_temp=log(1+exp(param_LN(K)))-param_LN(K)+(K-1)/2*log(2*pi);
             err_temp=logratio-param_LN(1:(K-1));
