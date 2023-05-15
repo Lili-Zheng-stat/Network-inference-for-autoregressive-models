@@ -20,11 +20,11 @@ data.generate=function(M,N,A,ErrType,var)
       X=cbind(X,A%*%X[,t]+runif(M,min=-1,max=1)*sqrt(3*var))
     }
   }
-  else if(Errtype=="Gaussian")
+  else if(ErrType=="Gaussian")
   {
     #Compute the stationary covariance Sigma
     Theta=(diag(M)-A%*%A)/var
-    Sigma=solve(theta)
+    Sigma=solve(Theta)
     L=svd(Sigma);sqrtS=(L$u)%*%diag(sqrt(L$d))%*%t(L$v)
     X=sqrtS%*%rnorm(M)
     for(t in 1:N)
